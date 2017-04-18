@@ -4,18 +4,30 @@
 <title>test</title>
 </head>
 <style>
+*{
+	margin: 0;
+	padding: 0;
+}
+th,td{
+	padding:5px;
+}
 #content{
-  width:100px;
-  height:100px;
+	margin: 5px;
+	width:100px;
+	height:100px;
+}
+#num:hover{
+    cursor: pointer;
+
 }
 </style>
 <body>
 <div id="content">
-  <table id="tb" border="1">
+  <table id="tb" border="1" cellspacing="0" cellpadding="0" >
     <tr>
       <th>name</th>
       <th>month</th>
-      <th id="num">num</th>
+      <th id="num" title="排列大小">num</th>
     </tr>
     <tr class="tbtr">
       <td>Tom</td>
@@ -35,6 +47,7 @@
   </table>
 </div>
 <script>
+
   document.getElementById('num').onclick = function(){
   	var tableId = document.getElementById('tb');
   	var str ='';
@@ -46,49 +59,11 @@
   	var num2 = parseInt(tableId.rows[2].cells[2].innerHTML);
   	var num3 = parseInt(tableId.rows[3].cells[2].innerHTML);
   	var temporary = new Array(3);
-  	/*if(num1>num2){
-  		if(num1>num3){
-  			if(num2>num3){
-  				temporary[0]=1;
-  				temporary[1]=2;
-  				temporary[2]=3;
-  			}else{
-  				temporary[0]=1;
-  				temporary[1]=3;
-  				temporary[2]=2;
-  			}
-  		}else{
-  			temporary[0]=3;
-  			temporary[1]=1;
-  			temporary[2]=2;
-  		}
-  	}else{
-  		if(num2>num3){
-  			if(num1>num3){
-  				temporary[0]=2;
-  				temporary[1]=1;
-  				temporary[2]=3;
-  			}else{
-  				temporary[0]=2;
-  				temporary[1]=3;
-  				temporary[2]=1;
-  			}
-  		}else{
-  			    temporary[0]=3;
-  				temporary[1]=2;
-  				temporary[2]=1;
-  		}
-  	}*/
   	temporary = [num1, num2, num3].map((num, index) => ({ num, index })).sort((a, b) => b.num - a.num).map(({ index }) => index + 1)
-  	tableId.innerHTML = "<tr><th>name</th><th>month</th><th id='num'>num</th></tr>";
-  	alert(temporary);
-  	var a = temporary[0];
-  	var j =0;
+  	tableId.innerHTML = "<tr><th>name</th><th>month</th><th id='num' title='排列大小'>num</th></tr>";
   	for(var i=0;i<temporary.length;i++){
-  		tableId.innerHTML += "<tr><td>"+numArray[i].name+"</td><td>"+numArray[i].month+"</td><td>"+numArray[i].num+"</td></tr>";
+  		tableId.innerHTML += "<tr><td>"+numArray[temporary[i]-1].name+"</td><td>"+numArray[temporary[i]-1].month+"</td><td>"+numArray[temporary[i]-1].num+"</td></tr>";
   	}
-
-  	
   }
   function person(name,month,num){
     this.name = name;
