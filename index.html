@@ -27,19 +27,19 @@ th,td{
     <tr>
       <th>name</th>
       <th>month</th>
-      <th id="num" title="排列大小">num</th>
+      <th id="num" title="从大到小排列" onclick="arrange()">num</th>
     </tr>
-    <tr class="tbtr">
+   <tr>
       <td>Tom</td>
       <td>January</td>
       <td>100</td>
     </tr>
-    <tr class="tbtr">
+    <tr>
       <td>Jar</td>
       <td>March</td>
       <td>70</td>
     </tr>
-    <tr class="tbtr">
+    <tr>
       <td>Sun</td>
       <td>June</td>
       <td>150</td>
@@ -47,8 +47,8 @@ th,td{
   </table>
 </div>
 <script>
-
-  document.getElementById('num').onclick = function(){
+  var qzone = 0; 
+  function arrange(){
   	var tableId = document.getElementById('tb');
   	var str ='';
   	var numArray = new Array();
@@ -58,12 +58,22 @@ th,td{
   	var num1 = parseInt(tableId.rows[1].cells[2].innerHTML);
   	var num2 = parseInt(tableId.rows[2].cells[2].innerHTML);
   	var num3 = parseInt(tableId.rows[3].cells[2].innerHTML);
-  	var temporary = new Array(3);
+  	var temporary = new Array();
   	temporary = [num1, num2, num3].map((num, index) => ({ num, index })).sort((a, b) => b.num - a.num).map(({ index }) => index + 1)
-  	tableId.innerHTML = "<tr><th>name</th><th>month</th><th id='num' title='排列大小'>num</th></tr>";
-  	for(var i=0;i<temporary.length;i++){
-  		tableId.innerHTML += "<tr><td>"+numArray[temporary[i]-1].name+"</td><td>"+numArray[temporary[i]-1].month+"</td><td>"+numArray[temporary[i]-1].num+"</td></tr>";
+  	if(qzone%2==0){
+  		tableId.innerHTML = "<tr><th>name</th><th>month</th><th id='num' title='从小到大排列' onclick='arrange()'>num</th></tr>";
+  		for(var i=0;i<temporary.length;i++){
+  			tableId.innerHTML += "<tr><td>"+numArray[temporary[i]-1].name+"</td><td>"+numArray[temporary[i]-1].month+"</td><td>"+numArray[temporary[i]-1].num+"</td></tr>";
+  		}
+  		qzone+=1;
+  	}else{
+  		tableId.innerHTML = "<tr><th>name</th><th>month</th><th id='num' title='从大到小排列' onclick='arrange()'>num</th></tr>";
+  		for(var i=0;i<temporary.length;i++){
+  			tableId.innerHTML += "<tr><td>"+numArray[temporary[temporary.length-i-1]-1].name+"</td><td>"+numArray[temporary[temporary.length-i-1]-1].month+"</td><td>"+numArray[temporary[temporary.length-i-1]-1].num+"</td></tr>";
+  		}
+  		qzone+=1;
   	}
+  	
   }
   function person(name,month,num){
     this.name = name;
